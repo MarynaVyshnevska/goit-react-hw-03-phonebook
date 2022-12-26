@@ -1,33 +1,36 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
-// // import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 // // import css from './Phonebook.module.css';
 
-class ContactCreate extends Component{
+class ContactCreate extends Component {
     state = {
         name: '',
         number: '',
     };
 
     handleChange = evt => {
-        const { name, value } = evt.currentTarget;
+        const { name, value } = evt.target;
         this.setState({ [name]: value });
-        console.log(this.state);
+        // console.log(this.state);
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        console.log("1");
-        console.log(this.state);
+        
+        // console.log(this.state);
+        // this.props.onSubmit(this.state);
         this.props.onSubmit({id: nanoid(), ...this.state});
         
+        this.reset();
+    }
+    reset = () =>{
         this.setState({ name: '', number: '' });
     }
-
     render() {
         const { name, number } = this.state;
         return (
-            <div onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}>
                 <label>
                     <p>Name</p>
                     <input
@@ -55,9 +58,15 @@ class ContactCreate extends Component{
                 <button type="submit">
                     Add contacts
                 </button>
-            </div>
+            </form>
         )
     }
 };
 
 export default ContactCreate;
+
+ContactCreate.propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    number: PropTypes.string,
+}

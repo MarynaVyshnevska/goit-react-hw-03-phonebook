@@ -12,6 +12,6 @@ const Section = ({ title, children }) => (
 export default Section;
 
 Section.propTypes = {
-    message: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     children: PropTypes.node,
 }

@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import Notiflix from 'notiflix';
+import PropTypes from 'prop-types';
 
-// import Phonebook from './Phonebook';
+
 import ContactCreate from './ContactCreate';
 import ContactList from './ContactList';
 import Section from './Section';
 import Filter from './ContactList/Filter';
 
 import contactsJson from './contacts.json';
+
 
 export class App extends Component {
   state = {
@@ -16,13 +19,17 @@ export class App extends Component {
   }
 
   addContact = newContact => {
+    console.log(newContact);
+    this.checkContact(newContact)
+      ? Notiflix.Notify.warning(`${newContact.name} is already in your phonebook `)
+      : this.setState(prevState => {
+        return {
+          contacts: [newContact, ...prevState.contacts]
+        };
+      });
     
-    this.setState(prevState => {
-      return {
-        contacts: [newContact, ...prevState.contacts],
-      }
-    })
-  }
+  
+  };
 
   deleteContact = (contactId) => {
     this.setState(prevState => ({
@@ -51,6 +58,10 @@ export class App extends Component {
     }))
   }
 
+  checkContact = newContact => {
+    return this.state.contacts.some(({ name }) => name.toLowerCase() === newContact.name.toLowerCase());
+  }
+
   render() {
     const {filter} = this.state;
     const filteredContacts = this.getFilteredContacts();
@@ -71,3 +82,13 @@ export class App extends Component {
     )
   }
 };
+
+App.propTypes = {
+    filter: PropTypes.string,
+    contacts: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })),
+}
+
