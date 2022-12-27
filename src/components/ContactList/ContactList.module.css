@@ -5,7 +5,7 @@
     display: flex;
     font-size: 16px;
     color: #6f172b;
-    gap: 16px;
+    justify-content: space-between;
 }
 
 .ContactList__button {
