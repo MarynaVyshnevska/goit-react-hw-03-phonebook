@@ -1,11 +1,16 @@
 import React from "react";
+import PropTypes from 'prop-types';
+import css from './Filter.module.css';
 
 const Filter = ({value, onChange}) =>{
     return (
         <label>
-            Find contacts by name 
+            <p className={css.Filter__filter}>
+                Find contacts by name 
+            </p>
             <input
                 type="text"
+                className={css.Filter__input}
                 value={value}
                 onChange={onChange}
             />
@@ -15,3 +20,7 @@ const Filter = ({value, onChange}) =>{
 }
 
 export default Filter;
+
+Filter.propTypes = {
+    value: PropTypes.string,
+}

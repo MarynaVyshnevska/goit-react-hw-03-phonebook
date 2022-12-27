@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import css from './ContactList.module.css';
 
 const ContactList = ({ contacts, onDeleteContact, onAvailableContacts }) => (
-    <ul className="">
+    <ul className={css.ContactList__list}>
         {contacts.map(({ id, name, number }) => (
             
             <li key={id}
-                className="">
-                <p className="">{name.split(" ").map((word) => { 
+                className={css.ContactList__item}>
+                <p className={css.ContactList__name}>{name.split(" ").map((word) => { 
                     return word[0].toUpperCase() + word.substring(1); 
                     }).join(" ")}
                 </p>
-                <p className="">{number}</p>
+                <p className={css.ContactList__phone}>{number}</p>
                 <button
                     type="button"
-                    className=""
+                    className={css.ContactList__button}
                     onClick={() => onDeleteContact(id)}
                 >
                     Delete

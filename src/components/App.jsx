@@ -7,6 +7,7 @@ import ContactCreate from './ContactCreate';
 import ContactList from './ContactList';
 import Section from './Section';
 import Filter from './ContactList/Filter';
+import Header from './Header';
 
 import contactsJson from './contacts.json';
 
@@ -67,7 +68,7 @@ export class App extends Component {
     const filteredContacts = this.getFilteredContacts();
     return (
       <>
-        <h1>Phonebook</h1>
+        <Header title="Phonebook"/>
         <ContactCreate onSubmit={this.addContact} />
         <Section title="Contacts">
           <Filter value={filter} onChange={this.changeFilter} />
