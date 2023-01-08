@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import { Formik, ErrorMessage } from 'formik';
+import { TfiCommentsSmiley } from "react-icons/tfi";
+
 import { FormPhone, InputPhone } from './ContactCreate.styled';
 import * as yup from 'yup';
 
@@ -60,7 +62,7 @@ class ContactCreate extends Component {
                 </div>
                 
                 <button type="submit">
-                    Add contacts
+                    Add contacts <TfiCommentsSmiley size={14} />
                 </button>
             </FormPhone>
             </Formik>

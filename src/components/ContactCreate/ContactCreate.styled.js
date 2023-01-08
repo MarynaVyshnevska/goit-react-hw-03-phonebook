@@ -33,6 +33,7 @@ export const FormPhone = styled(Form)`
 
 export const InputPhone = styled(Field)`
     width: 50%;
+    
     padding: 2px 8px;
     font-size: 16px;
     font-weight: 500;

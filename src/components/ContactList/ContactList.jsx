@@ -1,4 +1,5 @@
 import React from 'react';
+import { TfiCut } from "react-icons/tfi";
 import PropTypes from 'prop-types';
 import css from './ContactList.module.css';
 
@@ -18,7 +19,7 @@ const ContactList = ({ contacts, onDeleteContact, onAvailableContacts }) => (
                     className={css.ContactList__button}
                     onClick={() => onDeleteContact(id)}
                 >
-                    Delete
+                    Delete <TfiCut size={10} />
                 </button>
             </li>
         ))}
