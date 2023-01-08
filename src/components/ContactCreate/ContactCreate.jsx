@@ -1,69 +1,69 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
-import css from './ContactCreate.module.css';
+import { Formik, ErrorMessage } from 'formik';
+import { FormPhone, InputPhone } from './ContactCreate.styled';
+import * as yup from 'yup';
+
+const initialValues ={
+    name: '',
+    number: '',
+}
+
+const schemaContact = yup.object().shape({
+    name: yup.string().max(50).required(),
+    number: yup.string().min(3).max(15).required(),
+})
+
 
 class ContactCreate extends Component {
-    state = {
-        name: '',
-        number: '',
-    };
-
-    handleChange = evt => {
-        const { name, value } = evt.target;
-        this.setState({ [name]: value });
-        // console.log(this.state);
+        
+    handleSubmit = (values, {resetForm}) => {
+        console.log(values);
+        const formContactData = values;
+        this.props.onSubmit({id: nanoid(), ...formContactData});
+        
+        resetForm();
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        
-        // console.log(this.state);
-        // this.props.onSubmit(this.state);
-        this.props.onSubmit({id: nanoid(), ...this.state});
-        
-        this.reset();
-    }
-    reset = () =>{
-        this.setState({ name: '', number: '' });
-    }
     render() {
-        const { name, number } = this.state;
         return (
-            <form className={css.ContactCreate__container} onSubmit={this.handleSubmit}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={this.handleSubmit}
+                validationSchema={schemaContact}
+            >
+            <FormPhone  >
                 <div>
                     <label>
-                        <p className={css.ContactCreate__title}>Name</p>
-                        <input
+                        <p>Name</p>
+                        <InputPhone
                             type="text"
                             name="name"
                             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                             required
-                            className={css.ContactCreate__input}
-                            value={name}
-                            onChange={this.handleChange}
                         />
+                        <ErrorMessage name="name" component="div"/>    
                     </label>
                     <label>
-                        <p className={css.ContactCreate__title}>Phone</p>
-                        <input
+                        <p >Phone</p>
+                        <InputPhone
                             type="tel"
                             name="number"
                             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                             required
-                            className={css.ContactCreate__input}
-                            value={number}
-                            onChange={this.handleChange}
                         />
+                        <ErrorMessage name="number" component="div"/>      
                     </label>
                 </div>
                 
-                <button className={css.ContactCreate__button} type="submit">
+                <button type="submit">
                     Add contacts
                 </button>
-            </form>
+            </FormPhone>
+            </Formik>
         )
     }
 };
